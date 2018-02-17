@@ -3,8 +3,13 @@ import photos from '../fixtures/photos'
 
 class Photo extends PureComponent {
   render() {
+    const { photoId, playerWon } = this.props
+
     return (
-      <img src={photos[this.props.photoId]} alt="hangman" />
+      <div>
+        { playerWon ? <img src={photos[7]} alt="hangman" /> :
+                      <img src={photos[photoId]} alt="hangman" />}
+      </div>
     )
   }
 }
