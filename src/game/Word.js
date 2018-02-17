@@ -5,7 +5,8 @@ class Word extends PureComponent {
   render() {
     return (
       <div>
-      <h1>{ this.props.guessedWord }</h1>
+      <h3>Secret word:</h3>
+      <h1>{ this.props.word }</h1>
       </div>
     )
   }

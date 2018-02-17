@@ -11,36 +11,32 @@ const initialState = {
   guessedWord: guessedWord,
 }
 
-function changeWord(word, payload, guessedWord) {
-  return word.split("").map(function(letter, index) {
-    if (letter === payload || guessedWord.split(" ")[index] !== "_") {
-      return letter;
+const changeWord = (word, payload, guessedWord) => {
+  return word.split('').map(function(letter, index) {
+    if (letter === payload || guessedWord.split(' ')[index] !== '_') {
+      return letter
     } else {
-      return "_"
-    }
-  }).join(" ")
+      return '_'
+    }}).join(' ')
 }
 
-export default (currentState = initialState, { type, payload } = {}) => {
+export default (state = initialState, { type, payload } = {}) => {
   switch (type) {
     case GUESS:
-      if (!currentState.guessedLetters.includes(payload)) {
-        if (!currentState.secretWord.includes(payload)) {
-          return Object.assign({}, currentState, {
-            wrongGuessCount: currentState.wrongGuessCount + 1,
-            guessedLetters: currentState.guessedLetters.concat(payload)
-          })
-        } else {
-          return Object.assign({}, currentState, {
-            guessedWord: changeWord(currentState.secretWord, payload, currentState.guessedWord),
-            guessedLetters: currentState.guessedLetters.concat(payload)
-          })
-        }
+      const secretWord = state.secretWord
+      if (secretWord.includes(payload)) {
+        return Object.assign({}, state, {
+          guessedWord: changeWord(state.secretWord, payload, state.guessedWord),
+          guessedLetters: state.guessedLetters.concat(payload)
+        })
       } else {
-        return currentState
+        return Object.assign({}, state, {
+          guessedLetters: state.guessedLetters.concat(payload),
+          wrongGuessCount: state.wrongGuessCount + 1,
+        })
       }
 
     default:
-      return currentState
+      return state
   }
 }
